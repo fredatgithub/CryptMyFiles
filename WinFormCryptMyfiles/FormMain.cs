@@ -711,5 +711,15 @@ namespace WinFormCryptMyfiles
         // do something
       }
     }
+
+    private void ButtonCryptFile_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    private void ButtonDeCryptFile_Click(object sender, EventArgs e)
+    {
+
+    }
   }
 }
