@@ -93,6 +93,7 @@ namespace WinFormCryptMyfiles
         CreateLanguageFile();
         return;
       }
+
       var result = from node in xDoc.Descendants("term")
                    where node.HasElements
                    let xElementName = node.Element("name")
@@ -451,8 +452,7 @@ namespace WinFormCryptMyfiles
     private void CutToolStripMenuItemClick(object sender, EventArgs e)
     {
       Control focusedControl = FindFocusedControl(new List<Control> { }); // add your controls in the List
-      var tb = focusedControl as TextBox;
-      if (tb != null)
+      if (focusedControl is TextBox tb)
       {
         CutToClipboard(tb);
       }
@@ -461,8 +461,7 @@ namespace WinFormCryptMyfiles
     private void CopyToolStripMenuItemClick(object sender, EventArgs e)
     {
       Control focusedControl = FindFocusedControl(new List<Control> { }); // add your controls in the List
-      var tb = focusedControl as TextBox;
-      if (tb != null)
+      if (focusedControl is TextBox tb)
       {
         CopyToClipboard(tb);
       }
@@ -471,8 +470,7 @@ namespace WinFormCryptMyfiles
     private void PasteToolStripMenuItemClick(object sender, EventArgs e)
     {
       Control focusedControl = FindFocusedControl(new List<Control> { }); // add your controls in the List
-      var tb = focusedControl as TextBox;
-      if (tb != null)
+      if (focusedControl is TextBox tb)
       {
         PasteFromClipboard(tb);
       }
@@ -481,14 +479,20 @@ namespace WinFormCryptMyfiles
     private void SelectAllToolStripMenuItemClick(object sender, EventArgs e)
     {
       Control focusedControl = FindFocusedControl(new List<Control> { }); // add your controls in the List
-      TextBox control = focusedControl as TextBox;
-      if (control != null) control.SelectAll();
+      if (focusedControl is TextBox control)
+      {
+        control.SelectAll();
+      }
     }
 
     private void CutToClipboard(TextBoxBase tb, string errorMessage = "nothing")
     {
-      if (tb != ActiveControl) return;
-      if (tb.Text == string.Empty)
+      if (tb != ActiveControl)
+      {
+        return;
+      }
+
+      if (string.IsNullOrEmpty(tb.Text))
       {
         DisplayMessage(Translate("ThereIs") + Punctuation.OneSpace +
           Translate(errorMessage) + Punctuation.OneSpace +
@@ -497,7 +501,7 @@ namespace WinFormCryptMyfiles
         return;
       }
 
-      if (tb.SelectedText == string.Empty)
+      if (string.IsNullOrEmpty(tb.SelectedText))
       {
         DisplayMessage(Translate("NoTextHasBeenSelected"),
           Translate(errorMessage), MessageBoxButtons.OK);
@@ -510,18 +514,21 @@ namespace WinFormCryptMyfiles
 
     private void CopyToClipboard(TextBoxBase tb, string message = "nothing")
     {
-      if (tb != ActiveControl) return;
-      if (tb.Text == string.Empty)
+      if (tb != ActiveControl)
+      {
+        return;
+      }
+
+      if (string.IsNullOrEmpty(tb.Text))
       {
         DisplayMessage(Translate("ThereIsNothingToCopy") + Punctuation.OneSpace,
           Translate(message), MessageBoxButtons.OK);
         return;
       }
 
-      if (tb.SelectedText == string.Empty)
+      if (string.IsNullOrEmpty(tb.SelectedText))
       {
-        DisplayMessage(Translate("NoTextHasBeenSelected"),
-          Translate(message), MessageBoxButtons.OK);
+        DisplayMessage(Translate("NoTextHasBeenSelected"), Translate(message), MessageBoxButtons.OK);
         return;
       }
 

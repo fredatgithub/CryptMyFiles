@@ -72,6 +72,7 @@ namespace WinFormCryptMyfiles
       this.buttonDeCryptFile = new System.Windows.Forms.Button();
       this.labelDeCryptFilePath = new System.Windows.Forms.Label();
       this.textBoxDecryptFilePath = new System.Windows.Forms.TextBox();
+      this.openFileDialogMain = new System.Windows.Forms.OpenFileDialog();
       this.menuStrip1.SuspendLayout();
       this.SuspendLayout();
       // 
@@ -423,6 +424,10 @@ namespace WinFormCryptMyfiles
       this.textBoxDecryptFilePath.Size = new System.Drawing.Size(338, 20);
       this.textBoxDecryptFilePath.TabIndex = 5;
       // 
+      // openFileDialogMain
+      // 
+      this.openFileDialogMain.FileName = "openFileDialog1";
+      // 
       // FormMain
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -494,5 +499,6 @@ namespace WinFormCryptMyfiles
     private System.Windows.Forms.Button buttonDeCryptFile;
     private System.Windows.Forms.Label labelDeCryptFilePath;
     private System.Windows.Forms.TextBox textBoxDecryptFilePath;
+    private System.Windows.Forms.OpenFileDialog openFileDialogMain;
   }
 }
