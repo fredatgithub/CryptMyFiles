@@ -5,6 +5,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Security.Cryptography;
+using System.Text;
 using System.Windows.Forms;
 using System.Xml.Linq;
 using WinFormCryptMyfiles.Properties;
@@ -721,12 +723,87 @@ namespace WinFormCryptMyfiles
 
     private void ButtonCryptFile_Click(object sender, EventArgs e)
     {
+      var fileContent = string.Empty;
+      var filePath = string.Empty;
+
+      using (OpenFileDialog openFileDialog = new OpenFileDialog())
+      {
+        //openFileDialog.InitialDirectory = "c:\\";
+        openFileDialog.Filter = "text files (*.txt)|*.txt|All files (*.*)|*.*";
+        openFileDialog.FilterIndex = 2;
+        openFileDialog.RestoreDirectory = true;
+
+        if (openFileDialog.ShowDialog() == DialogResult.OK)
+        {
+          textBoxfilePath.Text = openFileDialog.FileName;
+          filePath = openFileDialog.FileName;
+        }
+        else
+        {
+          return;
+        }
+      }
+
+      textBoxfilePath.Text = filePath;
+      Application.DoEvents();
+      //Read the contents of the file into a stream
+      using (StreamReader reader = new StreamReader(filePath))
+      {
+        fileContent = reader.ReadToEnd();
+      }
+
+      // Encrypt the file
+      string fileEncrypted = string.Empty;
+      fileEncrypted = RsaEncryption(fileContent);
+
+      // Write new file encrypted
+      string newFileName = $"{filePath}.encrypted";
+      try
+      {
+        using (StreamWriter sw = new StreamWriter(newFileName))
+        {
+          sw.Write(fileEncrypted);
+          sw.Flush();
+        }
+      }
+      catch (Exception)
+      {
+        throw;
+      }
+
+      // delete old file with erasure of the content of the file before
+
 
     }
 
     private void ButtonDeCryptFile_Click(object sender, EventArgs e)
     {
 
+    }
+
+    public static string RsaEncryption(string clearData)
+    {
+      var param = new CspParameters { KeyContainerName = "MyKeyContainer" };
+      using (var rsa = new RSACryptoServiceProvider(param))
+      {
+        string plainText = clearData;
+        byte[] plainData = Encoding.Default.GetBytes(plainText);
+        byte[] encryptedData = rsa.Encrypt(plainData, false);
+        string encryptedString = Convert.ToBase64String(encryptedData);
+        return encryptedString;
+      }
+    }
+
+    public static string RsaDecryption(string encryptedData)
+    {
+      var param = new CspParameters { KeyContainerName = "MyKeyContainer" };
+      using (var rsa = new RSACryptoServiceProvider(param))
+      {
+        byte[] encryptedBytes = Convert.FromBase64String(encryptedData);
+        byte[] decryptedData = rsa.Decrypt(encryptedBytes, false);
+        string plainData = Encoding.Default.GetString(decryptedData);
+        return plainData;
+      }
     }
   }
 }
