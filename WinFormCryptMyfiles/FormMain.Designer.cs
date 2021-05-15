@@ -73,6 +73,8 @@ namespace WinFormCryptMyfiles
       this.labelDeCryptFilePath = new System.Windows.Forms.Label();
       this.textBoxDecryptFilePath = new System.Windows.Forms.TextBox();
       this.openFileDialogMain = new System.Windows.Forms.OpenFileDialog();
+      this.buttonGetCryptedFilePath = new System.Windows.Forms.Button();
+      this.buttonGetDeCryptedFilePath = new System.Windows.Forms.Button();
       this.menuStrip1.SuspendLayout();
       this.SuspendLayout();
       // 
@@ -89,7 +91,7 @@ namespace WinFormCryptMyfiles
       this.menuStrip1.Location = new System.Drawing.Point(0, 0);
       this.menuStrip1.Name = "menuStrip1";
       this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
-      this.menuStrip1.Size = new System.Drawing.Size(683, 24);
+      this.menuStrip1.Size = new System.Drawing.Size(843, 24);
       this.menuStrip1.TabIndex = 1;
       this.menuStrip1.Text = "menuStrip1";
       // 
@@ -376,13 +378,13 @@ namespace WinFormCryptMyfiles
       // 
       this.textBoxfilePath.Location = new System.Drawing.Point(99, 80);
       this.textBoxfilePath.Name = "textBoxfilePath";
-      this.textBoxfilePath.Size = new System.Drawing.Size(338, 20);
+      this.textBoxfilePath.Size = new System.Drawing.Size(582, 20);
       this.textBoxfilePath.TabIndex = 2;
       // 
       // labelCryptFilePath
       // 
       this.labelCryptFilePath.AutoSize = true;
-      this.labelCryptFilePath.Location = new System.Drawing.Point(22, 86);
+      this.labelCryptFilePath.Location = new System.Drawing.Point(22, 85);
       this.labelCryptFilePath.Name = "labelCryptFilePath";
       this.labelCryptFilePath.Size = new System.Drawing.Size(50, 13);
       this.labelCryptFilePath.TabIndex = 3;
@@ -390,7 +392,7 @@ namespace WinFormCryptMyfiles
       // 
       // buttonCryptFile
       // 
-      this.buttonCryptFile.Location = new System.Drawing.Point(483, 79);
+      this.buttonCryptFile.Location = new System.Drawing.Point(741, 79);
       this.buttonCryptFile.Name = "buttonCryptFile";
       this.buttonCryptFile.Size = new System.Drawing.Size(75, 23);
       this.buttonCryptFile.TabIndex = 4;
@@ -400,7 +402,7 @@ namespace WinFormCryptMyfiles
       // 
       // buttonDeCryptFile
       // 
-      this.buttonDeCryptFile.Location = new System.Drawing.Point(483, 108);
+      this.buttonDeCryptFile.Location = new System.Drawing.Point(741, 108);
       this.buttonDeCryptFile.Name = "buttonDeCryptFile";
       this.buttonDeCryptFile.Size = new System.Drawing.Size(75, 23);
       this.buttonDeCryptFile.TabIndex = 7;
@@ -411,7 +413,7 @@ namespace WinFormCryptMyfiles
       // labelDeCryptFilePath
       // 
       this.labelDeCryptFilePath.AutoSize = true;
-      this.labelDeCryptFilePath.Location = new System.Drawing.Point(22, 115);
+      this.labelDeCryptFilePath.Location = new System.Drawing.Point(22, 113);
       this.labelDeCryptFilePath.Name = "labelDeCryptFilePath";
       this.labelDeCryptFilePath.Size = new System.Drawing.Size(50, 13);
       this.labelDeCryptFilePath.TabIndex = 6;
@@ -421,18 +423,40 @@ namespace WinFormCryptMyfiles
       // 
       this.textBoxDecryptFilePath.Location = new System.Drawing.Point(99, 109);
       this.textBoxDecryptFilePath.Name = "textBoxDecryptFilePath";
-      this.textBoxDecryptFilePath.Size = new System.Drawing.Size(338, 20);
+      this.textBoxDecryptFilePath.Size = new System.Drawing.Size(582, 20);
       this.textBoxDecryptFilePath.TabIndex = 5;
       // 
       // openFileDialogMain
       // 
       this.openFileDialogMain.FileName = "openFileDialog1";
       // 
+      // buttonGetCryptedFilePath
+      // 
+      this.buttonGetCryptedFilePath.Location = new System.Drawing.Point(701, 80);
+      this.buttonGetCryptedFilePath.Name = "buttonGetCryptedFilePath";
+      this.buttonGetCryptedFilePath.Size = new System.Drawing.Size(33, 23);
+      this.buttonGetCryptedFilePath.TabIndex = 8;
+      this.buttonGetCryptedFilePath.Text = "...";
+      this.buttonGetCryptedFilePath.UseVisualStyleBackColor = true;
+      this.buttonGetCryptedFilePath.Click += new System.EventHandler(this.ButtonGetCryptedFilePath_Click);
+      // 
+      // buttonGetDeCryptedFilePath
+      // 
+      this.buttonGetDeCryptedFilePath.Location = new System.Drawing.Point(701, 109);
+      this.buttonGetDeCryptedFilePath.Name = "buttonGetDeCryptedFilePath";
+      this.buttonGetDeCryptedFilePath.Size = new System.Drawing.Size(33, 23);
+      this.buttonGetDeCryptedFilePath.TabIndex = 9;
+      this.buttonGetDeCryptedFilePath.Text = "...";
+      this.buttonGetDeCryptedFilePath.UseVisualStyleBackColor = true;
+      this.buttonGetDeCryptedFilePath.Click += new System.EventHandler(this.ButtonGetDeCryptedFilePath_Click);
+      // 
       // FormMain
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(683, 434);
+      this.ClientSize = new System.Drawing.Size(843, 261);
+      this.Controls.Add(this.buttonGetDeCryptedFilePath);
+      this.Controls.Add(this.buttonGetCryptedFilePath);
       this.Controls.Add(this.buttonDeCryptFile);
       this.Controls.Add(this.labelDeCryptFilePath);
       this.Controls.Add(this.textBoxDecryptFilePath);
@@ -500,5 +524,7 @@ namespace WinFormCryptMyfiles
     private System.Windows.Forms.Label labelDeCryptFilePath;
     private System.Windows.Forms.TextBox textBoxDecryptFilePath;
     private System.Windows.Forms.OpenFileDialog openFileDialogMain;
+    private System.Windows.Forms.Button buttonGetCryptedFilePath;
+    private System.Windows.Forms.Button buttonGetDeCryptedFilePath;
   }
 }

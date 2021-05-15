@@ -723,29 +723,14 @@ namespace WinFormCryptMyfiles
 
     private void ButtonCryptFile_Click(object sender, EventArgs e)
     {
-      var fileContent = string.Empty;
-      var filePath = string.Empty;
-
-      using (OpenFileDialog openFileDialog = new OpenFileDialog())
+      if (string.IsNullOrEmpty(textBoxfilePath.Text))
       {
-        //openFileDialog.InitialDirectory = "c:\\";
-        openFileDialog.Filter = "text files (*.txt)|*.txt|All files (*.*)|*.*";
-        openFileDialog.FilterIndex = 2;
-        openFileDialog.RestoreDirectory = true;
-
-        if (openFileDialog.ShowDialog() == DialogResult.OK)
-        {
-          textBoxfilePath.Text = openFileDialog.FileName;
-          filePath = openFileDialog.FileName;
-        }
-        else
-        {
-          return;
-        }
+        return;
       }
 
-      textBoxfilePath.Text = filePath;
-      Application.DoEvents();
+      var fileContent = string.Empty;
+      var filePath = textBoxfilePath.Text;
+
       //Read the contents of the file into a stream
       using (StreamReader reader = new StreamReader(filePath))
       {
@@ -778,17 +763,26 @@ namespace WinFormCryptMyfiles
 
     private void ButtonDeCryptFile_Click(object sender, EventArgs e)
     {
+      if (string.IsNullOrEmpty(textBoxDecryptFilePath.Text))
+      {
+        return;
+      }
+
 
     }
 
     public static string RsaEncryption(string clearData)
     {
+      /*
+        RSA encryption is only mean for small amounts of data, the amount of data you can encrypt is dependent on the size of the key you are using, for example for 1024 bit RSA keys, and PKCS # 1 V1.5 padding, you can encrypt 117 bytes at most, with a 2048 RSA key, you can encrypt 245 bytes
+       */
       var param = new CspParameters { KeyContainerName = "MyKeyContainer" };
       using (var rsa = new RSACryptoServiceProvider(param))
       {
         string plainText = clearData;
         byte[] plainData = Encoding.Default.GetBytes(plainText);
-        byte[] encryptedData = rsa.Encrypt(plainData, false);
+        bool doOAEPPadding = true;
+        byte[] encryptedData = rsa.Encrypt(plainData, doOAEPPadding);
         string encryptedString = Convert.ToBase64String(encryptedData);
         return encryptedString;
       }
@@ -803,6 +797,38 @@ namespace WinFormCryptMyfiles
         byte[] decryptedData = rsa.Decrypt(encryptedBytes, false);
         string plainData = Encoding.Default.GetString(decryptedData);
         return plainData;
+      }
+    }
+
+    private void ButtonGetCryptedFilePath_Click(object sender, EventArgs e)
+    {
+      using (OpenFileDialog openFileDialog = new OpenFileDialog())
+      {
+        //openFileDialog.InitialDirectory = "c:\\";
+        openFileDialog.Filter = "text files (*.txt)|*.txt|All files (*.*)|*.*";
+        openFileDialog.FilterIndex = 2;
+        openFileDialog.RestoreDirectory = true;
+
+        if (openFileDialog.ShowDialog() == DialogResult.OK)
+        {
+          textBoxfilePath.Text = openFileDialog.FileName;
+        }
+      }
+    }
+
+    private void ButtonGetDeCryptedFilePath_Click(object sender, EventArgs e)
+    {
+      using (OpenFileDialog openFileDialog = new OpenFileDialog())
+      {
+        //openFileDialog.InitialDirectory = "c:\\";
+        openFileDialog.Filter = "text files (*.txt)|*.txt|All files (*.*)|*.*";
+        openFileDialog.FilterIndex = 2;
+        openFileDialog.RestoreDirectory = true;
+
+        if (openFileDialog.ShowDialog() == DialogResult.OK)
+        {
+          textBoxDecryptFilePath.Text = openFileDialog.FileName;
+        }
       }
     }
   }
